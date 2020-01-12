@@ -29,7 +29,12 @@ unit Tiles;
 interface
 
   uses
-    LCLIntf,  LCLType,  SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+{$IFnDEF FPC}
+  jpeg, Windows,
+{$ELSE}
+  LCLIntf, LCLType, LMessages,
+{$ENDIF}
+  Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
     Menus, ExtCtrls, ComCtrls, StdCtrls, Grids, ToolWin, Buttons, SZPCX;
 
 
@@ -115,7 +120,6 @@ interface
         OrgSkipX, OrgSkipY,
         OrgSkipW, OrgSkipH: Integer;
         OrgReadBounds: Boolean;
-        OrgRemoveDuplicates: Boolean;
       end;
 
   type
@@ -195,7 +199,6 @@ interface
                            SkipX, SkipY, SkipW, SkipH: Integer;
                            var ProgressBar: TProgressBar;
                            ReadBounds: Boolean;
-                           RemoveDuplicates: Boolean;
                            bRefresh: Boolean;
                            tbr: TileBitmapRec): TileBitmapRec;
 
@@ -234,7 +237,6 @@ interface
                       DstStart: Integer;
                       Overwrite,
                       Stretch,
-                      UseScaler,
                       CopyBounds,
                       Same: Boolean;
                       ProgressBar: TProgressBar): Integer;
@@ -256,8 +258,25 @@ interface
 
 implementation
 
+{$IFDEF FPC}
+  procedure WriteBitmapToPNGFile (OutputFilename: string; Bitmap: TBitmap; TransparentColor: Integer);
+  begin
+    Bitmap.Transparent := True;
+    Bitmap.TransparentColor := TransparentColor;
+    try
+      Bitmap.SaveToFile(OutputFilename);
+    finally
+      Bitmap.Free;
+    end;
+  end;
 
-{$IFDEF HAS_UNIT_PNGIMAGE}
+  procedure ReadBitmapFromPNGFile (InputFilename: string; Bitmap: TBitmap);
+  begin
+    Bitmap.LoadFromFile(InputFilename);
+  end;
+
+{$ELSE}
+ {$IFDEF HAS_UNIT_PNGIMAGE}
   uses
     PNGImage;
 
@@ -281,19 +300,20 @@ implementation
     png.AssignHandle(Bitmap.Handle, png.TransparentColor <> clNone, png.TransparentColor);
     png.Free;
   end;
-{$ELSE}
+ {$ELSE}
+  uses
+    PngUnit;
 
   procedure WriteBitmapToPNGFile (OutputFilename: string; Bitmap: TBitmap; TransparentColor: Integer);
   begin
-    //todo: fix pngunit to built-in png support
-    //PNGUnit.WriteBitmapToPNGFile (OutputFilename, Bitmap, TransparentColor);
+    PNGUnit.WriteBitmapToPNGFile (OutputFilename, Bitmap, TransparentColor);
   end;
 
   procedure ReadBitmapFromPNGFile (InputFilename: string; Bitmap: TBitmap);
   begin
-    //todo: fix pngunit to built-in png support
-    //PNGUnit.ReadBitmapFromPngFile (InputFilename, Bitmap)
+    PNGUnit.ReadBitmapFromPngFile (InputFilename, Bitmap)
   end;
+ {$ENDIF}
 {$ENDIF}
 
 
@@ -748,56 +768,6 @@ implementation
     end;
   end;
 
-
-  function GetChkSumChar (var tbr: TileBitmapRec; n: Integer): Char;
-    var
-      x, y: Integer;
-      chk: Integer;
-  begin
-    with tbr do
-    begin
-      chk := Bounds[n];
-
-      chk := chk xor (OffsetX[n] xor OffsetY[n]);  // 2.4
-
-      for y := 0 to H - 1 do
-        for x := 0 to W - 1 do
-        begin
-          chk := chk xor (chk shr 1);
-          Inc (chk, TileBitmap.Canvas.Pixels[n * W + x, y]);
-        end;
-    end;
-    GetChkSumChar := Chr (chk and $FF);
-  end;
-
-  function CompareTiles (var tbr: TileBitmapRec; n1, n2: Integer): Boolean;
-    var
-      x, y: Integer;
-  begin
-    CompareTiles := FALSE;
-    with tbr do
-    begin
-      if Bounds[n1] <> Bounds[n2] then
-        Exit;
-
-      if OffsetX[n1] <> OffsetX[n2] then
-        Exit;
-      if OffsetY[n1] <> OffsetY[n2] then
-        Exit;
-
-      n1 := n1 * W;
-      n2 := n2 * W;
-      for y := 0 to H - 1 do
-        for x := 0 to W - 1 do
-          with TileBitmap.Canvas do
-            if Pixels[n1 + x, y] <> Pixels[n2 + x, y] then
-              Exit;
-    end;
-    CompareTiles := TRUE;
-  end;
-
-
-
   function ReadTileBitmap (Filename: string;
                            BlockWidth, BlockHeight: Integer;
                            TransX, TransY: Integer;
@@ -805,58 +775,17 @@ implementation
                            SkipX, SkipY, SkipW, SkipH: Integer;
                            var ProgressBar: TProgressBar;
                            ReadBounds: Boolean;
-                           RemoveDuplicates: Boolean;
                            bRefresh: Boolean;
                            tbr: TileBitmapRec): TileBitmapRec;
     var
       WW, HH, BW, BH: Integer;
       TempBitmap: TBitmap;
-      i, j, x, y, z: Integer;
+      i, x, y, z: Integer;
       Src, Dst: TRect;
       bnd: Integer;
       bResult: Boolean;
       Error: Boolean;
       Img: TImage;
-      ChkSum: string;
-      MapTiles: array of Integer;
-      MapW, MapH: Integer;
-      a, b: Integer;
-
-    const
-      BLOCK_W = 64;
-      BLOCK_H = 64;
-
-    function NewTileIsUnique: Boolean;
-      var
-        c: Char;
-        i: Integer;
-        tile: Integer;
-        FoundAt: Integer;
-    begin
-      with tbr do
-      begin
-        c := GetChkSumChar (tbr, TileCount);
-        while (TileCount + 1 > length (ChkSum)) do
-          ChkSum := ChkSum + c;
-        ChkSum[TileCount + 1] := c;
-
-        tile := TileCount;
-        FoundAt := -1;
-        for i := 0 to TileCount - 1 do
-          if c = ChkSum[i + 1] then
-              if CompareTiles (tbr, i, TileCount) then
-              begin
-                FoundAt := i;
-                tile := i;
-              end;
-      end;
-
-      i := Length (MapTiles);
-      SetLength (MapTiles, i + 1);
-      MapTiles[i] := tile;
-
-      Result := FoundAt = -1;
-    end;
 
   begin
 
@@ -877,7 +806,6 @@ implementation
         SkipW := OrgSkipW;
         SkipH := OrgSkipH;
         ReadBounds := OrgReadBounds;
-        RemoveDuplicates := OrgRemoveDuplicates;
       end;
     end
     else
@@ -898,7 +826,6 @@ implementation
         OrgSkipW := SkipW;
         OrgSkipH := SkipH;
         OrgReadBounds := ReadBounds;
-        OrgRemoveDuplicates := RemoveDuplicates;
       end;
     end;
 
@@ -961,11 +888,8 @@ implementation
         WW := TempBitmap.Width - SkipX;
         HH := TempBitmap.Height - SkipY;
 
-        MapW := WW div BW;
-        MapH := HH div BH;
-
         if Progressbar <> nil then
-          ProgressBar.Max := MapW * MapH;
+          ProgressBar.Max := (HH div BH) * (WW div BW);
 
         if (WW >= W) and (HH >= H) then
         begin
@@ -1034,7 +958,7 @@ implementation
               TransparentColor := Trans;
             end;
 
-            i := MapW * MapH;
+            i := (HH div BH) * (WW div BW);
             while (i * W) * 3 > 65536 - 16 do
               Dec (i);
 
@@ -1053,11 +977,8 @@ implementation
               Height := H;
 
             TileCount := 0;
-            ChkSum := '';
-            SetLength (MapTiles, 0);
-
-            for y := 0 to MapH - 1 do
-              for x := 0 to MapW - 1 do
+            for y := 0 to HH div BH - 1 do
+              for x := 0 to WW div BW - 1 do
               begin
                 if Progressbar <> nil then
                   with ProgressBar do
@@ -1110,51 +1031,9 @@ implementation
                   end;
 
                 if not Error then
-                  if (not RemoveDuplicates) or NewTileIsUnique then
-                    Inc (TileCount);
+                  Inc (TileCount);
               end;
           end;
-
-          if Length (MapTiles) > 0 then   // import map as clip
-          begin
-
-            for i := Length (tbr.Clip.aMaps) - 1 downto 0 do
-              RemoveClip (tbr, i);
-
-            z := 0;
-            b := MapH;
-            for y := 0 to (MapH - 1) div BLOCK_H do
-            begin
-              j := BLOCK_H;
-              Dec (b, j);
-              if (b < 0) then
-                j := MapH mod BLOCK_H;
-
-              a := MapW;
-              for x := 0 to (MapW - 1) div BLOCK_W do
-              begin
-                i := BLOCK_W;
-                Dec (a, i);
-                if (a < 0) then
-                  i := MapW mod BLOCK_W;
-                NewClipMap (tbr, i, j);
-                tbr.Clip.aMaps[z].Id := Chr (Ord ('0') + z);
-                Inc (z);
-              end;
-            end;
-
-            i := 0;
-            tbr.Clip.CurMap := 0;
-            for y := 0 to MapH - 1 do
-              for x := 0 to MapW - 1 do
-              begin
-                z := (y div BLOCK_H) * (MapW div BLOCK_W) + (x div BLOCK_W);
-                if (i <= Length (MapTiles)) then
-                  tbr.Clip.aMaps[z].Map[y mod BLOCK_H, x mod BLOCK_W].Mid := MapTiles[i];
-                Inc (i);
-              end;
-          end;
-
           RemoveEmptyTiles (tbr);
           Current := 0;
         end
@@ -1166,9 +1045,6 @@ implementation
       MessageDlg ('Error reading ' + Filename, mtError, [mbOk], 0);
     ReadTileBitmap := tbr;
     TempBitmap.Free;
-
-
-
   end;
 
   function WriteTileBitmap (Filename: string;
@@ -1497,6 +1373,54 @@ implementation
     AllowMultEmptyTiles := LastAllowMultEmpty;
   end;
 
+  function GetChkSumChar (var tbr: TileBitmapRec; n: Integer): Char;
+    var
+      x, y: Integer;
+      chk, px: Integer;
+  begin
+    with tbr do
+    begin
+      chk := Bounds[n];
+
+      chk := chk xor (OffsetX[n] xor OffsetY[n]);  // 2.4
+
+      for y := 0 to H - 1 do
+        for x := 0 to W - 1 do
+        begin
+          chk := chk xor (chk shr 1);
+          px := TileBitmap.Canvas.Pixels[n * W + x, y];
+          chk := Integer (chk + px);
+        end;
+    end;
+    GetChkSumChar := Chr (chk and $FF);
+  end;
+
+  function CompareTiles (var tbr: TileBitmapRec; n1, n2: Integer): Boolean;
+    var
+      x, y: Integer;
+  begin
+    CompareTiles := FALSE;
+    with tbr do
+    begin
+      if Bounds[n1] <> Bounds[n2] then
+        Exit;
+
+      if OffsetX[n1] <> OffsetX[n2] then
+        Exit;
+      if OffsetY[n1] <> OffsetY[n2] then
+        Exit;
+
+      n1 := n1 * W;
+      n2 := n2 * W;
+      for y := 0 to H - 1 do
+        for x := 0 to W - 1 do
+          with TileBitmap.Canvas do
+            if Pixels[n1 + x, y] <> Pixels[n2 + x, y] then
+              Exit;
+    end;
+    CompareTiles := TRUE;
+  end;
+
   function RemoveDuplicates (var tbr: TileBitmapRec;
                      var ProgressBar: TProgressBar): Boolean;
     var
@@ -1575,46 +1499,12 @@ implementation
     end;
   end;
 
-
-
-  procedure Scale2X (SrcCanvas: TCanvas; SR: TRect; DstCanvas: TCanvas; DR: TRect; EdgeColor: TColor);
-  // en.wikipedia.org/wiki/Pixel_art_scaling_algorithms
-    var
-      i, j: Integer;
-      P, A, B, C, D: TColor;
-      P1, P2, P3, P4: TColor;
-  begin
-    for j := 0 to SR.Bottom - 1 do
-      for i := 0 to SR.Right - 1 do
-      begin
-        P := SrcCanvas.Pixels[SR.Left + i, SR.Top + j];
-        A := EdgeColor;  B := EdgeColor;  C := EdgeColor;  D := EdgeColor;
-        if (i > 0)             then C := SrcCanvas.Pixels[SR.Left + i - 1, SR.Top + j];
-        if (j > 0)             then A := SrcCanvas.Pixels[SR.Left + i,     SR.Top + j - 1];
-        if (i < SR.Right - 1)  then B := SrcCanvas.Pixels[SR.Left + i + 1, SR.Top + j];
-        if (j < SR.Bottom - 1) then D := SrcCanvas.Pixels[SR.Left + i,     SR.Top + j + 1];
-        P1 := P;  P2 := P;  P3 := P;  P4 := P;
-        if (C = A) and (C <> D) and (A <> B) then P1 := A;
-        if (A = B) and (A <> C) and (B <> D) then P2 := B;
-        if (D = C) and (D <> B) and (C <> A) then P3 := C;
-        if (B = D) and (B <> A) and (D <> C) then P4 := D;
-        DstCanvas.Pixels[DR.Left + 2 * i,     DR.Top + 2 * j] := P1;
-        DstCanvas.Pixels[DR.Left + 2 * i + 1, DR.Top + 2 * j] := P2;
-        DstCanvas.Pixels[DR.Left + 2 * i,     DR.Top + 2 * j + 1] := P3;
-        DstCanvas.Pixels[DR.Left + 2 * i + 1, DR.Top + 2 * j + 1] := P4;
-      end;
-
-  end;
-
-
-
   function CopyTiles (var src: TileBitmapRec;
                       var dst: TileBitmapRec;
                       SrcStart, SrcCount: Integer;
                       DstStart: Integer;
                       Overwrite,
                       Stretch,
-                      UseScaler,
                       CopyBounds,
                       Same: Boolean;
                       ProgressBar: TProgressBar): Integer;
@@ -1750,12 +1640,6 @@ implementation
       end;
       Dst.TileBitmap.Canvas.CopyRect (d, Src.TileBitmap.Canvas, s);
 
-      if UseScaler then
-      begin
-        if (d.Bottom = 2 * s.Bottom) then
-          Scale2X (Src.TileBitmap.Canvas, s, Dst.TileBitmap.Canvas, d, TRANS_COLOR);
-      end;
-
       SwapCur;
       i := Dst.Current;
       SwapCur;
@@ -1780,7 +1664,7 @@ implementation
         else
           Dst.OffsetY[i] := Src.OffsetY[Src.Current];
       end;
-
+      
     end;
 
     Src.Current := SrcCur;
@@ -1788,7 +1672,6 @@ implementation
     Dst.Current := DstStart;
     CopyTiles := DstCount;
   end;
-
 
 
   function SaveTBR (var F: File; ID: string; var TBR: TileBitmapRec): Boolean;
@@ -1990,7 +1873,7 @@ implementation
         SaveInt (OrgSkipY);
         SaveInt (OrgSkipW);
         SaveInt (OrgSkipH);
-        SaveInt (Integer (OrgReadBounds) + 2 * Integer (OrgRemoveDuplicates));
+        SaveInt (Integer (OrgReadBounds));
       end;
 
     SaveInt (Ord ('K'));  // 2.2
@@ -2216,11 +2099,7 @@ implementation
                OrgSkipY := ReadInt;
                OrgSkipW := ReadInt;
                OrgSkipH := ReadInt;
-
-               i := ReadInt;  { options }
-               OrgReadBounds := Boolean (i and 1);
-               OrgRemoveDuplicates := Boolean (i and 2);
-
+               OrgReadBounds := Boolean (ReadInt);
                if tmpVer > 1 then
                begin
                  { nop }

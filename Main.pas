@@ -10376,21 +10376,8 @@ procedure TMainForm.Generate1Click(Sender: TObject);
                 if bits < 0 then  // 2.52 - big endian
                 begin
                   bits := Abs (bits);
-                  //TODO: fix asm code to portable pascal code
-                 { asm
-                    push ebx
-                    mov eax, Number
-                    mov ecx, bits
-                    mov ebx, 0
-                  @@1:
-                    shr eax, 1
-                    rcl ebx, 1
-                    dec ecx
-                    jnz @@1
-
-                    mov Number, ebx
-                    pop ebx
-                  end;}
+                  //fixed asm code to portable pascal code
+                 Number := SwapEndian(Number);
                 end;
 
                 v := '';
