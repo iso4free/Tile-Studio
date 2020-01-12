@@ -1,4 +1,6 @@
-unit Hex;
+unit HEX;
+
+{$MODE Delphi}
 
   { 
       Tile Studio

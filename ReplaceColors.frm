@@ -10,10 +10,8 @@ object Replace: TReplace
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
   Position = poDesktopCenter
   PixelsPerInch = 96
-  TextHeight = 13
   object Label9: TLabel
     Left = 117
     Top = 208
@@ -29,58 +27,58 @@ object Replace: TReplace
     Caption = 'Find'
     TabOrder = 3
     object L1: TLabel
-      Left = 16
-      Top = 20
+      Left = 14
+      Top = 6
       Width = 59
       Height = 13
       Caption = 'Color to find:'
     end
     object L3: TLabel
-      Left = 32
-      Top = 108
+      Left = 30
+      Top = 94
       Width = 23
       Height = 13
       Caption = 'Red:'
     end
     object FindColor1: TShape
-      Left = 128
-      Top = 16
+      Left = 126
+      Top = 2
       Width = 57
       Height = 22
       OnMouseDown = ColorMouseDown
     end
     object FindColor2: TShape
-      Left = 128
-      Top = 45
+      Left = 126
+      Top = 31
       Width = 57
       Height = 22
       Visible = False
       OnMouseDown = ColorMouseDown
     end
     object Label1: TLabel
-      Left = 16
-      Top = 84
+      Left = 14
+      Top = 70
       Width = 87
       Height = 13
       Caption = 'Tolerance (0..255)'
     end
     object Label2: TLabel
-      Left = 32
-      Top = 132
+      Left = 30
+      Top = 118
       Width = 32
       Height = 13
       Caption = 'Green:'
     end
     object Label3: TLabel
-      Left = 32
-      Top = 156
+      Left = 30
+      Top = 142
       Width = 24
       Height = 13
       Caption = 'Blue:'
     end
     object TolGreen: TSpinEdit
-      Left = 128
-      Top = 128
+      Left = 126
+      Top = 114
       Width = 57
       Height = 22
       MaxValue = 255
@@ -89,8 +87,8 @@ object Replace: TReplace
       Value = 0
     end
     object FindRange: TCheckBox
-      Left = 32
-      Top = 48
+      Left = 30
+      Top = 34
       Width = 57
       Height = 17
       Caption = 'Range'
@@ -98,8 +96,8 @@ object Replace: TReplace
       OnClick = FindRangeClick
     end
     object TolRed: TSpinEdit
-      Left = 128
-      Top = 104
+      Left = 126
+      Top = 90
       Width = 57
       Height = 22
       MaxValue = 255
@@ -108,8 +106,8 @@ object Replace: TReplace
       Value = 0
     end
     object TolBlue: TSpinEdit
-      Left = 128
-      Top = 152
+      Left = 126
+      Top = 138
       Width = 57
       Height = 22
       MaxValue = 255
@@ -126,58 +124,58 @@ object Replace: TReplace
     Caption = 'Replace'
     TabOrder = 4
     object Label4: TLabel
-      Left = 16
-      Top = 20
+      Left = 14
+      Top = 6
       Width = 94
       Height = 13
       Caption = 'Replace color with::'
     end
     object ReplaceColor1: TShape
-      Left = 128
-      Top = 16
+      Left = 126
+      Top = 2
       Width = 57
       Height = 22
       OnMouseDown = ColorMouseDown
     end
     object ReplaceColor2: TShape
-      Left = 128
-      Top = 45
+      Left = 126
+      Top = 31
       Width = 57
       Height = 22
       Visible = False
       OnMouseDown = ColorMouseDown
     end
     object Label5: TLabel
-      Left = 16
-      Top = 84
+      Left = 14
+      Top = 70
       Width = 100
       Height = 13
       Caption = 'Add Color (-255..255)'
     end
     object Label6: TLabel
-      Left = 32
-      Top = 108
+      Left = 30
+      Top = 94
       Width = 23
       Height = 13
       Caption = 'Red:'
     end
     object Label7: TLabel
-      Left = 32
-      Top = 132
+      Left = 30
+      Top = 118
       Width = 32
       Height = 13
       Caption = 'Green:'
     end
     object Label8: TLabel
-      Left = 32
-      Top = 156
+      Left = 30
+      Top = 142
       Width = 24
       Height = 13
       Caption = 'Blue:'
     end
     object ReplaceRange: TCheckBox
-      Left = 32
-      Top = 48
+      Left = 30
+      Top = 34
       Width = 57
       Height = 17
       Caption = 'Range'
@@ -185,8 +183,8 @@ object Replace: TReplace
       OnClick = ReplaceRangeClick
     end
     object AddBlue: TSpinEdit
-      Left = 128
-      Top = 152
+      Left = 126
+      Top = 138
       Width = 57
       Height = 22
       MaxValue = 255
@@ -195,8 +193,8 @@ object Replace: TReplace
       Value = 0
     end
     object AddGreen: TSpinEdit
-      Left = 128
-      Top = 128
+      Left = 126
+      Top = 114
       Width = 57
       Height = 22
       MaxValue = 255
@@ -205,8 +203,8 @@ object Replace: TReplace
       Value = 0
     end
     object AddRed: TSpinEdit
-      Left = 128
-      Top = 104
+      Left = 126
+      Top = 90
       Width = 57
       Height = 22
       MaxValue = 255
@@ -244,7 +242,6 @@ object Replace: TReplace
     OnClick = CancelClick
   end
   object ColorDialog: TColorDialog
-    Ctl3D = True
     Left = 208
     Top = 8
   end

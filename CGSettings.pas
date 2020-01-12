@@ -24,12 +24,12 @@ unit CGSettings;
       SOFTWARE.
   }
 
-  {$I SETTINGS.INC}
+  {$I settings.inc}
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  LCLIntf,  LCLType,  LMessages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ComCtrls;
 
 const
@@ -80,7 +80,7 @@ implementation
 
 uses Main;
 
-{$R *.DFM}
+{$R *.frm}
 
 
 function StringsToString (items: TStrings): string;

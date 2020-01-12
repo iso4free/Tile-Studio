@@ -25,12 +25,12 @@ unit Export;
   }
 
 
-  {$I SETTINGS.INC}
+  {$I settings.inc}
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  LCLIntf,  LCLType,  LMessages, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, Spin, ExtCtrls;
 
 type
@@ -70,7 +70,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.frm}
 
 uses
   Tiles;

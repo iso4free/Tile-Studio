@@ -24,12 +24,12 @@ unit About;
       SOFTWARE.
   }
 
-  {$I SETTINGS.INC}
+  {$I settings.inc}
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  LCLIntf,  LCLType,  LMessages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls;
 
 type
@@ -59,10 +59,10 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.frm}
 
 uses
-  Main, ShellApi;
+  Main;
 
 
 procedure TAboutForm.OKButtonClick(Sender: TObject);
@@ -94,7 +94,7 @@ procedure TAboutForm.WebSiteClick(Sender: TObject);
 begin
   Param := URL;
   URL := WebSite.Caption;
-  ShellExecute (0, 'open', @URL[1], Nil, Nil, SW_SHOWNORMAL);
+   OpenDocument(URL); { *Перетворено з ShellExecute* }
 end;
 
 end.

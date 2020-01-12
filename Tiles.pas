@@ -24,13 +24,13 @@ unit Tiles;
       SOFTWARE.
   }
 
-  {$I SETTINGS.INC}
+  {$I settings.inc}
 
 interface
 
   uses
-    Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-    Menus, ExtCtrls, ComCtrls, StdCtrls, Grids, jpeg, ToolWin, Buttons, SZPCX;
+    LCLIntf,  LCLType,  SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+    Menus, ExtCtrls, ComCtrls, StdCtrls, Grids, ToolWin, Buttons, SZPCX;
 
 
   const
@@ -282,17 +282,17 @@ implementation
     png.Free;
   end;
 {$ELSE}
-  uses
-    PNGUnit;
 
   procedure WriteBitmapToPNGFile (OutputFilename: string; Bitmap: TBitmap; TransparentColor: Integer);
   begin
-    PNGUnit.WriteBitmapToPNGFile (OutputFilename, Bitmap, TransparentColor);
+    //todo: fix pngunit to built-in png support
+    //PNGUnit.WriteBitmapToPNGFile (OutputFilename, Bitmap, TransparentColor);
   end;
 
   procedure ReadBitmapFromPNGFile (InputFilename: string; Bitmap: TBitmap);
   begin
-    PNGUnit.ReadBitmapFromPngFile (InputFilename, Bitmap)
+    //todo: fix pngunit to built-in png support
+    //PNGUnit.ReadBitmapFromPngFile (InputFilename, Bitmap)
   end;
 {$ENDIF}
 

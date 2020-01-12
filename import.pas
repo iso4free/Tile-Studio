@@ -25,12 +25,12 @@ unit Import;
   }
 
 
-  {$I SETTINGS.INC}
+  {$I settings.inc}
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  LCLIntf,  LCLType,  LMessages, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, Spin, ComCtrls;
 
 type
@@ -98,7 +98,7 @@ implementation
 
 uses Main, Tiles;
 
-{$R *.DFM}
+{$R *.frm}
 
 procedure TImportTiles.FormShow(Sender: TObject);
   var

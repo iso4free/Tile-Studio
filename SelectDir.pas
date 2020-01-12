@@ -24,20 +24,20 @@ unit SelectDir;
       SOFTWARE.
   }
 
-  {$I SETTINGS.INC}
+  {$I settings.inc}
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  LCLIntf,  LCLType,  LMessages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, FileCtrl;
 
 type
   TOutputDir = class(TForm)
     OkButton: TButton;
     CancelButton: TButton;
-    DirectoryListBox: TDirectoryListBox;
-    DriveComboBox: TDriveComboBox;
+    DirectoryListBox: TListBox;
+    DriveComboBox: TComboBox;
     L2: TLabel;
     L1: TLabel;
     procedure FormShow(Sender: TObject);
@@ -56,7 +56,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.frm}
 
 procedure TOutputDir.FormShow(Sender: TObject);
 begin

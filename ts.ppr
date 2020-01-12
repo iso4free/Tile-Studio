@@ -1,5 +1,7 @@
 program TS;
 
+{$MODE Delphi}
+
   { TILE STUDIO
 
     Web site:    http://tilestudio.sourceforge.net/
@@ -15,7 +17,7 @@ program TS;
   }
 
 uses
-  Forms,
+  Forms, Interfaces,
   Main in 'Main.pas' {MainForm},
   Tiles in 'Tiles.pas',
   Import in 'Import.pas' {ImportTiles},
@@ -36,7 +38,7 @@ uses
   Settings in 'Settings.pas' {SettingsForm},
   RGBConvForm in 'RGBConvForm.pas' {RGBConv};
 
-{$R *.RES}
+{$R *.res}
 
 begin
   Application.Initialize;

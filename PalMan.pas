@@ -24,12 +24,12 @@ unit PalMan;
       SOFTWARE.
   }
 
-  {$I SETTINGS.INC}
+  {$I settings.inc}
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  LCLIntf,  LCLType,  LMessages, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ComCtrls, Spin;
 
 const
@@ -124,7 +124,7 @@ implementation
 
 uses Main;
 
-{$R *.DFM}
+{$R *.frm}
 
 var
   LastColor: Integer;

@@ -24,12 +24,12 @@ unit MCEdit;
       SOFTWARE.
   }
 
-  {$I SETTINGS.INC}
+  {$I settings.inc}
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  LCLIntf,  LCLType,  LMessages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, Spin;
 
 const
@@ -65,10 +65,10 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.frm}
 
 uses
-  Hex;
+  HEX;
 
 procedure TMapCode.OkButtonClick(Sender: TObject);
 begin

@@ -1,9 +1,11 @@
 unit Settings;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  LCLIntf,  LCLType,  LMessages, Messages, SysUtils, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Spin;
 
 type
@@ -29,7 +31,7 @@ var
 
 implementation
 
-{$R *.dfm}
+{$R *.frm}
 
 procedure TSettingsForm.OkButtonClick(Sender: TObject);
 begin

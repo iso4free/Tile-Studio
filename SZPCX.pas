@@ -56,7 +56,7 @@ Version 1.0.0, 2004-07-19
 
 interface
 
-uses SysUtils,Windows,Classes,Graphics;
+uses SysUtils,Classes,Graphics,LCLType,LCLIntf;
 
 type
 
@@ -262,7 +262,7 @@ begin
   case PCXPixelFormat of
     SZPCXpf1bit,
     SZPCXpf4bit,
-    SZPCXpf8bit: CopyMemory(p1Byte,pOutData,Header.BytesPerLine);
+    SZPCXpf8bit: Move(p1Byte,pOutData,Header.BytesPerLine);
 
     SZPCXpf24bit:
     begin

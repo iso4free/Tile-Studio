@@ -156,7 +156,7 @@ unit Main;
 
   }
 
-  {$I SETTINGS.INC}
+  {$I settings.inc}
 
   { PNG is now handled by PngImage instead of PngUnit }
 
@@ -165,9 +165,9 @@ unit Main;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Menus, ExtCtrls, ComCtrls, StdCtrls, Grids, jpeg, ToolWin, Buttons, Tiles,
-  ExtDlgs, ShellAPI, ImgList, Spin, Math, Noise, SZPCX;
+  LCLIntf,  LCLType,  SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Menus, ExtCtrls, ComCtrls, StdCtrls, Buttons, Tiles,
+  ExtDlgs, ImgList, {Spin,} Math, Noise{, SZPCX};
 
 const
   APPL_NAME = 'Tile Studio';
@@ -1113,11 +1113,11 @@ var
 
 implementation
 
-uses Import, Clipbrd, About, Create, TileCopy, MCEdit, Hex, CGSettings,
+uses Import, Clipbrd, About, Create, TileCopy, MCEdit, HEX, CGSettings,
   SelectDir, Export, Scroll, Calc, PalMan, ImpPovAni, ReplaceColors,
   InfoForm, Settings, ListsForm, RGBConvForm;
 
-{$R *.DFM}
+{$R *.frm}
 
 
 
@@ -4931,7 +4931,7 @@ procedure TMainForm.Homepage1Click(Sender: TObject);
     Param: string;
 begin
   Param := URL;
-  ShellExecute (0, 'open', PChar (Param), Nil, Nil, SW_SHOWNORMAL);
+   OpenDocument(PChar (Param)); { *Перетворено з ShellExecute* }
 end;
 
 procedure TMainForm.ExportTiles1Click(Sender: TObject);
@@ -10372,7 +10372,8 @@ procedure TMainForm.Generate1Click(Sender: TObject);
                 if bits < 0 then  // 2.52 - big endian
                 begin
                   bits := Abs (bits);
-                  asm
+                  //TODO: fix asm code to portable pascal code
+                 { asm
                     push ebx
                     mov eax, Number
                     mov ecx, bits
@@ -10385,7 +10386,7 @@ procedure TMainForm.Generate1Click(Sender: TObject);
 
                     mov Number, ebx
                     pop ebx
-                  end;
+                  end;}
                 end;
 
                 v := '';
@@ -13807,16 +13808,19 @@ begin
       s := f + s;
 
   try
-    OutputDir.DirectoryListBox.Directory := s;
+    //todo: fix directorylistbox.directory proprty
+    OutputDir.DirectoryListBox.Caption := s;
   except
     OutputPath := '';
-    OutputDir.DirectoryListBox.Directory := '';
+    //todo: fix directorylistbox.directory proprty
+    OutputDir.DirectoryListBox.Caption := '';
   end;
 
   OutputDir.ShowModal;
   if OutputDir.Result then
   begin
-    s := OutputDir.DirectoryListBox.Directory;
+    //todo: fix directorylistbox.directory proprty
+    s := OutputDir.DirectoryListBox.Caption;
 
     if Copy (s, 1, Length (f)) = f then
       Delete (s, 1, Length (f));
@@ -14737,7 +14741,7 @@ procedure TMainForm.Tutorial1Click(Sender: TObject);
     Param: string;
 begin
   Param := ApplPath + 'Tutorial\tutor.html';
-  ShellExecute (0, 'open', PChar (Param), Nil, Nil, SW_SHOWNORMAL);
+   OpenDocument(PChar (Param)); { *Перетворено з ShellExecute* }
 end;
 
 procedure TMainForm.OutputtoProjectDirectory1Click(Sender: TObject);
@@ -16891,4 +16895,3 @@ begin
 end;
 
 end.
-

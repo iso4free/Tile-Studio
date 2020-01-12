@@ -24,12 +24,12 @@ unit Scroll;
       SOFTWARE.
   }
 
-  {$I SETTINGS.INC}
+  {$I settings.inc}
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  LCLIntf,  LCLType,  LMessages, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls;
 
 type
@@ -57,7 +57,7 @@ var
 
 implementation
 
-{$R *.DFM}
+{$R *.frm}
 
 procedure TMapScroll.YKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);

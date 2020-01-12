@@ -1,5 +1,7 @@
 unit Noise;
 
+{$MODE Delphi}
+
 interface
 
   {$G+}
