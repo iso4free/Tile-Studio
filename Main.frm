@@ -26,14 +26,14 @@ object MainForm: TMainForm
     Width = 843
     Align = alBottom
     BevelOuter = bvNone
-    ClientHeight = 94
-    ClientWidth = 839
+    ClientHeight = 98
+    ClientWidth = 843
     TabOrder = 0
     object Tab: TTabControl
       Left = 0
-      Height = 76
+      Height = 80
       Top = 0
-      Width = 839
+      Width = 843
       HotTrack = True
       OnChange = TabChange
       TabPosition = tpBottom
@@ -41,17 +41,17 @@ object MainForm: TMainForm
       TabOrder = 0
       object TileScrollBox: TScrollBox
         Left = 2
-        Height = 46
+        Height = 50
         Top = 2
-        Width = 835
+        Width = 839
         HorzScrollBar.Page = 161
         HorzScrollBar.Tracking = True
         VertScrollBar.Page = 1
         VertScrollBar.Visible = False
         Align = alClient
         BorderStyle = bsNone
-        ClientHeight = 46
-        ClientWidth = 835
+        ClientHeight = 50
+        ClientWidth = 839
         Color = clBtnFace
         ParentColor = False
         TabOrder = 0
@@ -76,8 +76,8 @@ object MainForm: TMainForm
     object StatusBar: TStatusBar
       Left = 0
       Height = 18
-      Top = 76
-      Width = 839
+      Top = 80
+      Width = 843
       Panels = <      
         item
           Alignment = taCenter
@@ -116,24 +116,24 @@ object MainForm: TMainForm
     Width = 118
     Align = alRight
     BevelOuter = bvNone
-    ClientHeight = 552
-    ClientWidth = 114
+    ClientHeight = 556
+    ClientWidth = 118
     TabOrder = 1
     object PalettePanel: TPanel
       Left = 0
       Height = 33
       Top = 0
-      Width = 114
+      Width = 118
       Align = alTop
       BorderWidth = 4
-      ClientHeight = 29
-      ClientWidth = 110
+      ClientHeight = 33
+      ClientWidth = 118
       TabOrder = 0
       object Palette: TPaintBox
         Left = 5
-        Height = 19
+        Height = 23
         Top = 5
-        Width = 100
+        Width = 108
         Align = alClient
         Color = clNone
         ParentColor = False
@@ -148,28 +148,28 @@ object MainForm: TMainForm
       Left = 0
       Height = 32
       Top = 33
-      Width = 114
+      Width = 118
       Align = alTop
       BevelOuter = bvNone
-      ClientHeight = 28
-      ClientWidth = 110
+      ClientHeight = 32
+      ClientWidth = 118
       TabOrder = 1
       object ColorPanel: TPanel
         Left = 0
-        Height = 28
+        Height = 32
         Top = 0
         Width = 26
         Align = alLeft
         BorderWidth = 4
-        ClientHeight = 24
-        ClientWidth = 22
+        ClientHeight = 32
+        ClientWidth = 26
         TabOrder = 0
         object Color: TShape
           Left = 5
-          Height = 14
+          Height = 22
           Hint = 'Drawing Color'
           Top = 5
-          Width = 12
+          Width = 16
           Align = alClient
           Brush.Color = clGray
           ParentShowHint = False
@@ -180,20 +180,20 @@ object MainForm: TMainForm
       end
       object BackGroundPanel: TPanel
         Left = 26
-        Height = 28
+        Height = 32
         Top = 0
         Width = 26
         Align = alLeft
         BorderWidth = 4
-        ClientHeight = 24
-        ClientWidth = 22
+        ClientHeight = 32
+        ClientWidth = 26
         TabOrder = 1
         object BackGround: TShape
           Left = 5
-          Height = 14
+          Height = 22
           Hint = 'Transparent Color'
           Top = 5
-          Width = 12
+          Width = 16
           Align = alClient
           Brush.Color = clBtnFace
           ParentShowHint = False
@@ -205,13 +205,13 @@ object MainForm: TMainForm
       end
       object FromToPanel: TPanel
         Left = 52
-        Height = 28
+        Height = 32
         Top = 0
-        Width = 58
+        Width = 66
         Align = alClient
         BorderWidth = 3
-        ClientHeight = 24
-        ClientWidth = 54
+        ClientHeight = 32
+        ClientWidth = 66
         TabOrder = 2
         object FromTo: TPaintBox
           Left = 3
@@ -232,36 +232,36 @@ object MainForm: TMainForm
       Left = 0
       Height = 32
       Top = 65
-      Width = 114
+      Width = 118
       Align = alTop
       BorderWidth = 4
-      ClientHeight = 28
-      ClientWidth = 110
+      ClientHeight = 32
+      ClientWidth = 118
       TabOrder = 2
       object Pattern: TImage
         Left = 5
-        Height = 18
+        Height = 22
         Top = 5
-        Width = 100
+        Width = 108
         Align = alClient
       end
     end
     object ProgressPanel: TPanel
       Left = 0
       Height = 16
-      Top = 536
-      Width = 114
+      Top = 540
+      Width = 118
       Align = alBottom
       BorderWidth = 1
-      ClientHeight = 12
-      ClientWidth = 110
+      ClientHeight = 16
+      ClientWidth = 118
       TabOrder = 3
       Visible = False
       object ProgressBar: TProgressBar
         Left = 2
-        Height = 8
+        Height = 12
         Top = 2
-        Width = 106
+        Width = 114
         Align = alClient
         TabOrder = 0
       end
@@ -270,11 +270,11 @@ object MainForm: TMainForm
       Left = 0
       Height = 50
       Top = 97
-      Width = 114
+      Width = 118
       Align = alTop
       BorderWidth = 4
-      ClientHeight = 46
-      ClientWidth = 110
+      ClientHeight = 50
+      ClientWidth = 118
       TabOrder = 4
       object pPreview: TPanel
         Left = 22
@@ -283,14 +283,14 @@ object MainForm: TMainForm
         Width = 65
         BevelInner = bvLowered
         BorderWidth = 1
-        ClientHeight = 37
-        ClientWidth = 61
+        ClientHeight = 41
+        ClientWidth = 65
         TabOrder = 0
         object bmpPreview: TImage
           Left = 3
-          Height = 31
+          Height = 35
           Top = 3
-          Width = 55
+          Width = 59
           Align = alClient
           OnMouseDown = bmpPreviewMouseDown
         end
@@ -300,11 +300,11 @@ object MainForm: TMainForm
       Left = 0
       Height = 80
       Top = 147
-      Width = 114
+      Width = 118
       Align = alTop
       BorderWidth = 4
-      ClientHeight = 76
-      ClientWidth = 110
+      ClientHeight = 80
+      ClientWidth = 118
       TabOrder = 5
       object bUps: TSpeedButton
         Left = 16
@@ -448,8 +448,8 @@ object MainForm: TMainForm
         Width = 33
         BevelInner = bvRaised
         BorderWidth = 1
-        ClientHeight = 29
-        ClientWidth = 29
+        ClientHeight = 33
+        ClientWidth = 33
         TabOrder = 0
         OnMouseDown = SelectBackMidFront
         object bmpBack: TImage
@@ -468,8 +468,8 @@ object MainForm: TMainForm
         Width = 33
         BevelInner = bvRaised
         BorderWidth = 1
-        ClientHeight = 29
-        ClientWidth = 29
+        ClientHeight = 33
+        ClientWidth = 33
         TabOrder = 1
         OnMouseDown = SelectBackMidFront
         object bmpMid: TImage
@@ -488,8 +488,8 @@ object MainForm: TMainForm
         Width = 33
         BevelInner = bvRaised
         BorderWidth = 1
-        ClientHeight = 29
-        ClientWidth = 29
+        ClientHeight = 33
+        ClientWidth = 33
         TabOrder = 2
         OnMouseDown = SelectBackMidFront
         object bmpFront: TImage
@@ -505,8 +505,8 @@ object MainForm: TMainForm
     object ClipTab: TTabControl
       Left = 0
       Height = 49
-      Top = 418
-      Width = 114
+      Top = 422
+      Width = 118
       HotTrack = True
       OnChange = ClipTabChange
       Align = alBottom
@@ -517,7 +517,7 @@ object MainForm: TMainForm
         Height = 19
         Hint = 'Clipboard'
         Top = 28
-        Width = 110
+        Width = 114
         HorzScrollBar.Page = 73
         HorzScrollBar.Tracking = True
         VertScrollBar.Page = 19
@@ -525,7 +525,7 @@ object MainForm: TMainForm
         Align = alClient
         BorderStyle = bsNone
         ClientHeight = 19
-        ClientWidth = 107
+        ClientWidth = 99
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -541,8 +541,8 @@ object MainForm: TMainForm
       Left = 0
       Height = 69
       Hint = 'Tile Sequences'
-      Top = 467
-      Width = 114
+      Top = 471
+      Width = 118
       OnChange = SeqTabChange
       TabPosition = tpBottom
       Align = alBottom
@@ -560,8 +560,8 @@ object MainForm: TMainForm
     object UtilsTab: TPageControl
       Left = 0
       Height = 85
-      Top = 333
-      Width = 114
+      Top = 337
+      Width = 118
       ActivePage = RGBTab
       Align = alBottom
       HotTrack = True
@@ -572,26 +572,26 @@ object MainForm: TMainForm
       Options = [nboMultiLine]
       object RGBTab: TTabSheet
         Caption = 'RGB'
-        ClientHeight = 52
-        ClientWidth = 104
+        ClientHeight = 57
+        ClientWidth = 108
         object RGBPanel: TPanel
           Left = 0
-          Height = 52
+          Height = 57
           Top = 0
-          Width = 104
+          Width = 108
           Align = alClient
-          ClientHeight = 48
-          ClientWidth = 100
+          ClientHeight = 57
+          ClientWidth = 108
           TabOrder = 0
           object RGBControlPanel: TPanel
             Left = 1
             Height = 17
-            Top = 30
-            Width = 98
+            Top = 39
+            Width = 106
             Align = alBottom
             BevelOuter = bvNone
-            ClientHeight = 13
-            ClientWidth = 94
+            ClientHeight = 17
+            ClientWidth = 106
             TabOrder = 0
             object bRGBConvertAll: TSpeedButton
               Left = 62
@@ -623,13 +623,13 @@ object MainForm: TMainForm
           end
           object RGBConvListBox: TListBox
             Left = 1
-            Height = 29
+            Height = 38
             Top = 1
-            Width = 98
+            Width = 106
             Align = alClient
             BorderStyle = bsNone
             ItemHeight = 0
-            ScrollWidth = 98
+            ScrollWidth = 106
             TabOrder = 1
             TopIndex = -1
           end
@@ -713,10 +713,12 @@ object MainForm: TMainForm
             Width = 108
             Align = alClient
             BorderStyle = bsNone
-            ItemHeight = 13
+            ItemHeight = 0
             MultiSelect = True
             OnClick = HistoryListBoxClick
+            ScrollWidth = 108
             TabOrder = 1
+            TopIndex = -1
           end
         end
       end
@@ -731,8 +733,8 @@ object MainForm: TMainForm
     HorzScrollBar.Tracking = True
     VertScrollBar.Page = 265
     VertScrollBar.Tracking = True
-    ClientHeight = 336
-    ClientWidth = 401
+    ClientHeight = 338
+    ClientWidth = 403
     Color = clSilver
     ParentColor = False
     TabOrder = 2
@@ -1080,18 +1082,18 @@ object MainForm: TMainForm
     Width = 68
     Align = alLeft
     BevelOuter = bvNone
-    ClientHeight = 552
-    ClientWidth = 64
+    ClientHeight = 556
+    ClientWidth = 68
     TabOrder = 4
     object ToolPanel: TPanel
       Left = 0
       Height = 286
       Top = 0
-      Width = 64
+      Width = 68
       Align = alTop
       BorderWidth = 4
-      ClientHeight = 282
-      ClientWidth = 60
+      ClientHeight = 286
+      ClientWidth = 68
       TabOrder = 0
       object PencilButton: TSpeedButton
         Left = 2
@@ -1491,8 +1493,8 @@ object MainForm: TMainForm
         Top = 188
         Width = 48
         BevelOuter = bvLowered
-        ClientHeight = 22
-        ClientWidth = 44
+        ClientHeight = 26
+        ClientWidth = 48
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -1512,10 +1514,10 @@ object MainForm: TMainForm
       Left = 0
       Height = 100
       Top = 358
-      Width = 64
+      Width = 68
       Align = alTop
-      ClientHeight = 96
-      ClientWidth = 60
+      ClientHeight = 100
+      ClientWidth = 68
       TabOrder = 1
       object MapCodeButton: TSpeedButton
         Left = 8
@@ -1536,17 +1538,17 @@ object MainForm: TMainForm
         Width = 48
         BevelOuter = bvLowered
         BorderWidth = 2
-        ClientHeight = 44
-        ClientWidth = 44
+        ClientHeight = 48
+        ClientWidth = 48
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
         object BoundBox: TPaintBox
           Left = 3
-          Height = 38
+          Height = 42
           Hint = 'Bounds (Shift+Click to set Lighting Angle)'
           Top = 3
-          Width = 38
+          Width = 42
           Align = alClient
           OnMouseDown = BoundBoxMouseDown
           OnPaint = BoundBoxPaint
@@ -1557,10 +1559,10 @@ object MainForm: TMainForm
       Left = 0
       Height = 72
       Top = 286
-      Width = 64
+      Width = 68
       Align = alTop
-      ClientHeight = 68
-      ClientWidth = 60
+      ClientHeight = 72
+      ClientWidth = 68
       TabOrder = 2
       object MapPointButton: TSpeedButton
         Left = 2
@@ -1672,18 +1674,18 @@ object MainForm: TMainForm
       Left = 0
       Height = 23
       Top = 458
-      Width = 64
+      Width = 68
       Align = alTop
       BorderWidth = 4
-      ClientHeight = 19
-      ClientWidth = 60
+      ClientHeight = 23
+      ClientWidth = 68
       TabOrder = 3
       Visible = False
       object AlphaPaintBox: TPaintBox
         Left = 5
-        Height = 9
+        Height = 13
         Top = 5
-        Width = 50
+        Width = 58
         Align = alClient
         OnPaint = AlphaPaintBoxPaint
       end
@@ -1731,15 +1733,15 @@ object MainForm: TMainForm
     Width = 28
     Align = alRight
     BorderWidth = 4
-    ClientHeight = 552
-    ClientWidth = 24
+    ClientHeight = 556
+    ClientWidth = 28
     TabOrder = 6
     Visible = False
     object UsedColorsImage: TImage
       Left = 5
-      Height = 542
+      Height = 546
       Top = 5
-      Width = 14
+      Width = 18
       Align = alClient
       OnMouseDown = UsedColorsImageMouseDown
       OnMouseMove = UsedColorsImageMouseMove
@@ -1751,8 +1753,8 @@ object MainForm: TMainForm
     Height = 105
     Top = 80
     Width = 89
-    ClientHeight = 101
-    ClientWidth = 85
+    ClientHeight = 105
+    ClientWidth = 89
     TabOrder = 7
     Visible = False
     object bmp1: TImage
@@ -1781,15 +1783,15 @@ object MainForm: TMainForm
     Width = 80
     Align = alRight
     BorderWidth = 4
-    ClientHeight = 552
-    ClientWidth = 76
+    ClientHeight = 556
+    ClientWidth = 80
     TabOrder = 8
     Visible = False
     object ColorPatternsImage: TImage
       Left = 5
-      Height = 542
+      Height = 546
       Top = 5
-      Width = 66
+      Width = 70
       Align = alClient
       OnMouseDown = ColorPatternsImageMouseDown
       OnMouseMove = ColorPatternsImageMouseMove
@@ -3952,5 +3954,9 @@ object MainForm: TMainForm
     OnTimer = RTTimerTimer
     Left = 144
     Top = 424
+  end
+  object SelectDirectoryDialog: TSelectDirectoryDialog
+    Left = 544
+    Top = 33
   end
 end

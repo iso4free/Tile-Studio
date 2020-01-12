@@ -266,7 +266,11 @@ const
 function WithoutExt (Name: string; Ext: string): string;
 
 type
+
+  { TMainForm }
+
   TMainForm = class(TForm)
+    SelectDirectoryDialog: TSelectDirectoryDialog;
     TilePanel: TPanel;
     RightPanel: TPanel;
     MainMenu: TMainMenu;
@@ -1114,7 +1118,7 @@ var
 implementation
 
 uses Import, Clipbrd, About, Create, TileCopy, MCEdit, HEX, CGSettings,
-  SelectDir, Export, Scroll, Calc, PalMan, ImpPovAni, ReplaceColors,
+  Export, Scroll, Calc, PalMan, ImpPovAni, ReplaceColors,
   InfoForm, Settings, ListsForm, RGBConvForm;
 
 {$R *.frm}
@@ -13806,22 +13810,11 @@ begin
   if Rel then
     if f <> '' then
       s := f + s;
-
-  try
-    //todo: fix directorylistbox.directory proprty
-    OutputDir.DirectoryListBox.Caption := s;
-  except
-    OutputPath := '';
-    //todo: fix directorylistbox.directory proprty
-    OutputDir.DirectoryListBox.Caption := '';
-  end;
-
-  OutputDir.ShowModal;
-  if OutputDir.Result then
+  SelectDirectoryDialog.InitialDir:=GetUserDir;
+  if SelectDirectoryDialog.Execute then
   begin
-    //todo: fix directorylistbox.directory proprty
-    s := OutputDir.DirectoryListBox.Caption;
 
+    s := SelectDirectoryDialog.FileName;
     if Copy (s, 1, Length (f)) = f then
       Delete (s, 1, Length (f));
 

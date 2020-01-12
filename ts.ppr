@@ -26,7 +26,6 @@ uses
   TileCopy in 'TileCopy.pas' {CopyTilesForm},
   MCEdit in 'MCEdit.pas' {MapCode},
   CGSettings in 'CGSettings.pas' {CodeGen},
-  SelectDir in 'SelectDir.pas' {OutputDir},
   Export in 'Export.pas' {ExportTiles},
   Scroll in 'Scroll.pas' {MapScroll},
   Calc in 'Calc.pas',
@@ -44,7 +43,6 @@ begin
   Application.Initialize;
   Application.Title := 'Tile Studio';
   Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TOutputDir, OutputDir);
   Application.CreateForm(TExportTiles, ExportTiles);
   Application.CreateForm(TMapScroll, MapScroll);
   Application.CreateForm(TPaletteManager, PaletteManager);
